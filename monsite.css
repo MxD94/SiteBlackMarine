@@ -15,7 +15,7 @@ body {
     background-attachment : fixed;
     background-position: center;
     
-    background-size: auto;
+ background-attachment: fixed;
     
     text-orientation: initial;
 
