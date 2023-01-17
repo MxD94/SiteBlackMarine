@@ -1,0 +1,81 @@
+
+
+body {
+    font-family: 'Tangerine', serif;
+    font-size: 30px;
+    text-shadow: 4px 4px 4px #FF0000;
+  }
+
+
+
+
+body {
+    
+    background-image:url("https://borderpolar.b-cdn.net/wp-content/uploads/2022/11/A-One-Piece-Game-Codes-AOPG-codes.png");  
+    background-attachment :fixed;
+    background-repeat: no-repeat;
+    
+    background-position: center;
+    background-size: 1440px 720px; 
+
+    background-origin: initial;
+    text-orientation: initial;
+
+    text-emphasis-color: red;
+
+
+}
+
+body1{
+    border-color: aqua;
+    border-width: 15px;
+    border-style: hidden;
+    
+}
+
+div class contact{
+    text-align: center;
+    font-style: italic;
+    cursor: pointer;
+    box-shadow: red;
+    text-overflow: unset;
+}
+
+table{
+    border: 5px solid red;
+    border-style: block;
+    border-width: 5px;
+    border-spacing: 5px;
+    padding: 5px;
+    margin-top: 15px;
+    text-justify: auto;
+    
+}
+
+caption{
+    border: 3px solid yellow;
+    color: aqua;
+    
+}
+
+
+
+
+thead{
+    border: 5px groove black;
+    color: royalblue;
+    padding: 7px;
+
+    
+}
+
+
+td{
+    color : bisque;
+    border: 5px groove black;
+    padding: 7px;
+}
+
+th{
+    border: 3px solid rgb(205, 125, 212);   
+}
