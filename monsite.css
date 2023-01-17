@@ -16,7 +16,7 @@ body {
     background-repeat: no-repeat;
     
     background-position: center;
-    background-size: inherit; 
+    background-size: contain; 
 
     background-origin: initial;
     text-orientation: initial;
