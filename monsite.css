@@ -18,7 +18,8 @@ body {
     background-position: center;
     background-size: auto;
     width: auto;
-
+    height: auto;
+    
     text-orientation: initial;
 
     text-emphasis-color: red;
