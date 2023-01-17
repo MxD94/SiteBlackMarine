@@ -16,6 +16,9 @@ body {
     background-size: 1920px 1080px;
     background-position: center;
     
+     background-attachment: unset;
+    
+    
     text-orientation: initial;
 
     text-emphasis-color: red;
