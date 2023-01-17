@@ -16,7 +16,7 @@ body {
     background-repeat: no-repeat;
     
     background-position: center;
-    background-size: auto; 
+    background-size: initial; 
 
     background-origin: initial;
     text-orientation: initial;
