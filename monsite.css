@@ -17,8 +17,8 @@ body {
     
     background-position: center;
     background-size: auto;
-    width: auto;
-    height: auto;
+    width : max-content;    
+    height: max-content;
     
     text-orientation: initial;
 
