@@ -18,7 +18,7 @@ body {
     background-position: center;
     background-size: contain; 
 
-    background-origin: border-box;
+    background-origin: padding-box;
     text-orientation: initial;
 
     text-emphasis-color: red;
