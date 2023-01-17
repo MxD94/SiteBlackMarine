@@ -16,7 +16,8 @@ body {
     background-repeat: no-repeat;
     
     background-position: center;
-    background-size: auto auto; 
+    background-size: auto;
+    width: auto;
 
     background-origin: 720px 480px;
     text-orientation: initial;
