@@ -3,79 +3,81 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title> Testproj</title>
+  <title>Testproj</title>
   <link rel="stylesheet" href="monsite.css">
-
 </head>
 
-<body1>
-
-  <center><h5><i> <strong> <mark> Black Marine </mark> </strong></i></h5> </center>
-
-  <br>
-</body1>
-
 <body>
-  <p> <h3></h3><center>Veuillez cliquer sur "Envoyer" pour acceder a l'application</center></h3>
-  <br>
+  <!-- En-tête -->
+  <header>
+    <h1 style="text-align: center;"><i><strong><mark>Black Marine</mark></strong></i></h1>
+  </header>
 
-  La base de données sera bientot opérationnel pour le moment je vous prie de patienter
+  <main>
+    <!-- Introduction -->
+    <section>
+      <p style="text-align: center;">
+        <strong>Veuillez cliquer sur "Envoyer" pour accéder à l'application.</strong>
+      </p>
+      <p>
+        La base de données sera bientôt opérationnelle, merci de patienter.
+      </p>
+    </section>
 
+    <!-- Tableau des statistiques -->
+    <section>
+      <h2 style="text-align: center;">Tableau des puissances</h2>
+      <table border="1" style="margin: 0 auto; text-align: center; border-collapse: collapse;">
+        <caption><em>Classement en termes de puissance</em></caption>
+        <thead>
+          <tr>
+            <th>Joueurs</th>
+            <th>Stats</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Capitaine</td>
+            <td>37,000</td>
+          </tr>
+          <tr>
+            <td>Second</td>
+            <td>17,000</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
 
-</p>
+    <!-- Formulaire -->
+    <section style="margin-top: 20px; text-align: center;">
+      <form>
+        <label for="choose">Pour toi, qui est le plus fort du clan ?</label>
+        <input type="text" id="choose" name="choose" placeholder="Entrer un nom">
+        <button type="submit">Envoyer</button>
+      </form>
+    </section>
 
-<center>
-<table>
-  <caption> <i> Tableau en terme de puissance
- <thead>
-    <tr>
-      <th scope="col"> Joueurs </th>
-      <th scope="col"> Stats   </th>
-    </tr>
-  </i>
-  </caption>
- </thead>
+    <!-- Zone de recherche et d'interaction -->
+    <section style="margin-top: 20px; text-align: center;">
+      <form>
+        <input type="search" placeholder="Rechercher ici">
+        <br><br>
+        <input type="radio" id="option1" name="option" value="option1">
+        <label for="option1">Option 1</label>
+        <br>
+        <input type="checkbox" id="agree" name="agree" required>
+        <label for="agree">Je suis d'accord</label>
+        <br><br>
+        <a href="https://raw.githubusercontent.com/MxD94/SiteBlackMarine/main/King.exe" download>
+          <button type="button">Télécharger</button>
+        </a>
+      </form>
+    </section>
+  </main>
 
- <tbody>
-    <tr>
-      <th scope="row"> Capitaine </th>
-      <td> 37,000</td>
-    </tr>
-
-    <tr>
-      <th scope="row"> Second </th>
-      <td> 17,000 </td>
-    </tr>
-
- </tbody>
-</table>
-
-
-<form>
-  <label for="choose">Pour toi qui est le plus fort du clan &nbsp;?</label>  
-  <input type="text">
-    <button type role aria-grabbed ="C:\Users\Sarah Chouireb\Desktop\Bagration\Test\Testproj.exe"> Envoyer </button>
-  <br>
-</form>
-
-
-
-
-<div class="contact">
-  <div style="box-shadow: tan;">
-    <div type="text" title="Debut" type="hidden"> 
-
-      <input type="search" value="rec">  
-      <br>
-      <input type="radio">
-      <input type="text" value="Entrer une valeur">
-       <input type="checkbox" required="checked">
-  
-
-  <a href="https://raw.githubusercontent.com/MxD94/SiteBlackMarine/main/King.exe"> Envoyer </a>
-  
-</div>
-  
-</center>
+  <!-- Pied de page -->
+  <footer style="margin-top: 20px; text-align: center;">
+    <p>&copy; 2025 Black Marine. Tous droits réservés.</p>
+  </footer>
 </body>
-</html>  
+</html>
