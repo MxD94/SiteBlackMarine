@@ -1,80 +1,142 @@
-
-
+/* Style général pour le corps */
 body {
-    font-family: 'Tangerine', serif;
-    font-size: 30px;
-    text-shadow: 4px 4px 4px #FF0000;
-  }
-
-
-
-
-body {
-    
-    background-image:url("https://borderpolar.b-cdn.net/wp-content/uploads/2022/11/A-One-Piece-Game-Codes-AOPG-codes.png");  
-    background-attachment : fixed;
+    font-family: 'Tangerine', serif; /* Style de police élégant */
+    font-size: 30px; /* Taille de police par défaut */
+    text-shadow: 4px 4px 4px #FF0000; /* Ombre rouge pour le texte */
+    background-image: url("https://borderpolar.b-cdn.net/wp-content/uploads/2022/11/A-One-Piece-Game-Codes-AOPG-codes.png");
+    background-attachment: fixed;
     background-position: center;
-        
-    width: 600px;
-    height: 300px;
-    
-    text-orientation: initial;
-
-    text-emphasis-color: red;
-
-
+    background-size: cover; /* Ajuste l'image pour couvrir tout l'écran */
+    color: #FFFFFF; /* Couleur du texte générale */
+    margin: 0; /* Supprime les marges par défaut */
+    padding: 0; /* Supprime les espacements par défaut */
 }
 
-body1{
-    border-color: aqua;
-    border-width: 15px;
-    border-style: hidden;
-    
+/* Suppression de body1, car ce n'est pas une balise HTML valide */
+
+/* Style pour les tableaux */
+table {
+    border: 2px solid #FF0000; /* Bordure rouge fine */
+    border-spacing: 10px; /* Espacement entre les cellules */
+    width: 80%; /* Largeur de 80% pour centrer le tableau */
+    margin: 20px auto; /* Centrage du tableau */
+    background-color: rgba(0, 0, 0, 0.7); /* Fond semi-transparent */
+    color: #FFF; /* Texte blanc */
+    text-align: center; /* Centre le contenu du tableau */
+    border-radius: 10px; /* Coins arrondis */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Effet d'ombre */
 }
 
-div class contact{
+/* Style pour les légendes de tableau */
+caption {
+    font-size: 1.2em;
+    color: aqua;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 2px #000000; /* Effet d'ombre pour le texte */
+}
+
+/* Style pour l'en-tête du tableau */
+thead {
+    background-color: #333333; /* Fond sombre */
+    color: royalblue; /* Couleur du texte */
+    border-bottom: 3px solid #FF0000; /* Bordure inférieure */
+    padding: 10px;
+}
+
+/* Style pour les lignes et colonnes */
+th, td {
+    padding: 10px; /* Espacement interne */
+    border: 2px solid rgba(255, 255, 255, 0.5); /* Bordure semi-transparente */
+}
+
+/* Couleur spécifique pour les cellules d'en-tête */
+th {
+    background-color: #8A2BE2; /* Couleur violette */
+    color: #FFF; /* Texte blanc */
+    font-weight: bold;
+    text-transform: uppercase; /* Texte en majuscule */
+}
+
+/* Style pour les cellules */
+td {
+    background-color: rgba(255, 255, 255, 0.1); /* Fond semi-transparent */
+    color: bisque;
+    font-style: italic; /* Texte en italique */
+}
+
+/* Section pour le formulaire */
+form {
+    text-align: center; /* Centrage du formulaire */
+    margin: 20px auto;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.7); /* Fond semi-transparent */
+    color: #FFF;
+    border-radius: 10px; /* Coins arrondis */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Effet d'ombre */
+    width: 50%; /* Largeur du formulaire */
+}
+
+/* Boutons */
+button, input[type="submit"] {
+    background-color: #FF4500; /* Couleur orange */
+    color: #FFF;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Effet de transition */
+}
+
+button:hover, input[type="submit"]:hover {
+    background-color: #FF6347; /* Couleur rouge clair au survol */
+}
+
+/* Champs de formulaire */
+input[type="text"], input[type="search"] {
+    width: 80%; /* Largeur des champs */
+    padding: 8px;
+    margin: 10px 0;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+/* Liens */
+a {
+    color: #FFF;
+    text-decoration: none; /* Supprime le soulignement */
+    font-weight: bold;
+}
+
+a:hover {
+    color: aqua; /* Change la couleur au survol */
+}
+
+/* Style pour les divisions spécifiques */
+.contact {
     text-align: center;
     font-style: italic;
     cursor: pointer;
-    box-shadow: red;
-    text-overflow: unset;
+    margin-top: 20px;
+    padding: 10px;
+    border: 2px dashed #FF0000; /* Bordure pointillée rouge */
+    background-color: rgba(255, 255, 255, 0.1); /* Fond semi-transparent */
+    border-radius: 10px;
 }
 
-table{
-    border: 5px solid red;
-    border-style: block;
-    border-width: 5px;
-    border-spacing: 5px;
-    padding: 5px;
-    margin-top: 15px;
-    text-justify: auto;
-    
-}
+/* Adaptation responsive */
+@media (max-width: 768px) {
+    body {
+        font-size: 20px; /* Réduction de la taille du texte */
+    }
 
-caption{
-    border: 3px solid yellow;
-    color: aqua;
-    
-}
+    table, form {
+        width: 90%; /* Réduction de la largeur */
+    }
 
-
-
-
-thead{
-    border: 5px groove black;
-    color: royalblue;
-    padding: 7px;
-
-    
-}
-
-
-td{
-    color : bisque;
-    border: 5px groove black;
-    padding: 7px;
-}
-
-th{
-    border: 3px solid rgb(205, 125, 212);   
+    button {
+        font-size: 0.9em; /* Taille du bouton réduite */
+    }
 }
