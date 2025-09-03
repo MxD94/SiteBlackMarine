@@ -1,83 +1,358 @@
-<!DOCTYPE html>
-<html lang="fr">
+<!doctype html>
+<html lang="fr" data-theme="light">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>Testproj</title>
-  <link rel="stylesheet" href="monsite.css">
-</head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CGU — Sakura</title>
+  <meta name="description" content="Conditions Générales d’Utilisation — Thème japonais Sakura (clair/sombre)" />
+  <style>
+    /* ===== Thème (variables CSS) ===== */
+    :root {
+      --bg: #ffffff;
+      --surface: #ffffffd9; /* cartes */
+      --surface-muted: #ffffffcc; /* éléments secondaires */
+      --ink: #1f2937; /* texte principal */
+      --ink-muted: #6b7280; /* texte secondaire */
+      --accent: #f4b4c8; /* rose sakura */
+      --accent-2: #fce7f3; /* rose pâle */
+      --accent-deep: #f9c6d8; /* rose plus soutenu */
+      --outline: #fce7f3; /* bordures délicates */
+      --shadow: 0 8px 30px rgba(249, 198, 216, 0.25);
+    }
+    [data-theme="dark"] {
+      --bg: #0f1115;
+      --surface: #161922e6;
+      --surface-muted: #161922cc;
+      --ink: #e5e7eb;
+      --ink-muted: #a1a1aa;
+      --accent: #f4b4c8;
+      --accent-2: #3a2a33; /* rose/gris pour fonds */
+      --accent-deep: #a64d6a;
+      --outline: #2b2430;
+      --shadow: 0 10px 30px rgba(166, 77, 106, 0.25);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0f1115;
+        --surface: #161922e6;
+        --surface-muted: #161922cc;
+        --ink: #e5e7eb;
+        --ink-muted: #a1a1aa;
+        --accent: #f4b4c8;
+        --accent-2: #3a2a33;
+        --accent-deep: #a64d6a;
+        --outline: #2b2430;
+        --shadow: 0 10px 30px rgba(166, 77, 106, 0.25);
+      }
+    }
 
+    /* ===== Base ===== */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--ink); background: var(--bg);
+      line-height: 1.6;
+    }
+    .container { max-width: 1120px; margin: 0 auto; padding: 1rem; }
+    .hidden { display: none; }
+
+    /* ===== Arrière-plan Sakura ===== */
+    .sakura-bg {
+      position: fixed; inset: 0; z-index: -2; pointer-events: none;
+      background:
+        radial-gradient(1200px 600px at 80% -10%, var(--accent-2) 0%, transparent 60%),
+        radial-gradient(900px 500px at 10% 0%, var(--surface-muted) 0%, transparent 60%),
+        linear-gradient(180deg, var(--bg), var(--surface-muted));
+    }
+    .petals { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+    .petals span {
+      position: absolute; top: -10vh; opacity: .6; filter: blur(.2px);
+      width: var(--size, 12px); height: var(--size, 12px);
+      left: var(--left, 50%);
+      background: radial-gradient(ellipse at 30% 30%, var(--accent-deep), var(--accent-2));
+      border-radius: 40% 60% 60% 40% / 40% 50% 50% 60%;
+      transform: rotate(var(--rot, 0deg));
+      animation: fall var(--dur, 14s) linear var(--delay, 0s) infinite;
+    }
+    @keyframes fall {
+      0% { transform: translateY(-5vh) rotate(0deg); opacity: 0; }
+      10% { opacity: .8; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* ===== Header ===== */
+    header {
+      position: sticky; top: 0; z-index: 40;
+      backdrop-filter: saturate(1.2) blur(8px);
+      background: color-mix(in oklab, var(--surface) 85%, transparent);
+      border-bottom: 1px solid var(--outline);
+    }
+    .header-wrap { display: flex; align-items: center; gap: .75rem; padding: .75rem 1rem; }
+    .brand { display: flex; align-items: center; gap: .5rem; font-weight: 700; letter-spacing: .2px; }
+    .brand-logo { width: 24px; height: 24px; display: inline-block; border-radius: 50%;
+      background: radial-gradient(ellipse at 30% 30%, var(--accent-deep), var(--accent));
+      box-shadow: 0 0 0 2px var(--outline) inset;
+    }
+    .header-actions { margin-left: auto; display: flex; gap: .5rem; align-items: center; }
+
+    /* ===== Boutons ===== */
+    .btn { appearance: none; border: 1px solid transparent; background: var(--accent);
+      color: #111827; border-radius: 12px; padding: .5rem .75rem; font-weight: 600; cursor: pointer;
+      box-shadow: var(--shadow); transition: transform .12s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+    .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--outline); }
+
+    /* ===== Disposition ===== */
+    .layout { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 1rem; }
+    @media (max-width: 980px) { .layout { grid-template-columns: 1fr; } }
+
+    /* ===== Sommaire ===== */
+    aside { position: sticky; top: 90px; align-self: start; }
+    .toc { background: var(--surface); border-radius: 16px; box-shadow: var(--shadow); border: 1px solid var(--outline); }
+    .toc h2 { margin: 0; padding: 1rem 1rem .25rem; font-size: 1rem; display: flex; align-items: center; gap: .5rem; }
+    .toc nav { max-height: 60vh; overflow: auto; padding: .5rem 0 1rem; }
+    .toc a { display: block; padding: .5rem .75rem; margin: .25rem .5rem; border-radius: 12px; text-decoration: none; color: var(--ink); border: 1px solid transparent; }
+    .toc a:hover { background: color-mix(in oklab, var(--accent-2) 55%, transparent); }
+    .toc a.active { background: color-mix(in oklab, var(--accent-2) 85%, transparent); border-color: var(--outline); }
+
+    /* ===== Cartes / Sections ===== */
+    .card { background: var(--surface); border-radius: 16px; border: 1px solid var(--outline); box-shadow: var(--shadow); }
+    .card .content { padding: 1rem 1.25rem; }
+    .card h1 { margin: 0 0 .25rem; font-size: 1.8rem; letter-spacing: .2px; }
+    .muted { color: var(--ink-muted); font-size: .9rem; }
+
+    section.article { scroll-margin-top: 90px; }
+    .article h3 { margin: 0; padding: 1rem 1.25rem .5rem; font-size: 1.2rem; display: flex; align-items: baseline; justify-content: space-between; }
+    .article .num { color: #ec4899; font-weight: 700; margin-right: .5rem; }
+    .article .body { padding: .5rem 1.25rem 1rem; color: var(--ink); }
+    .article .body p { margin: .6rem 0; }
+
+    /* ===== Pied de page ===== */
+    footer { display: flex; gap: .5rem; align-items: center; justify-content: space-between; color: var(--ink-muted); font-size: .82rem; padding: 1rem 0; }
+
+    /* ===== Bouton retour haut ===== */
+    .to-top { position: fixed; right: 16px; bottom: 16px; border-radius: 16px; padding: .6rem .9rem; opacity: 0; transform: translateY(8px); pointer-events: none; }
+    .to-top.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+    /* ===== Impression ===== */
+    @media print {
+      header, aside, .to-top { display: none !important; }
+      .layout { grid-template-columns: 1fr !important; }
+      .card, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; box-shadow: none !important; }
+    }
+  </style>
+</head>
 <body>
+  <!-- Fond sakura -->
+  <div class="sakura-bg" aria-hidden="true"></div>
+  <div class="petals" aria-hidden="true">
+    <!-- Petales (positions pré-définies pour un rendu doux) -->
+    <span style="--left:5%;--delay:.2s;--dur:16s;--size:18px;--rot:15deg"></span>
+    <span style="--left:12%;--delay:2s;--dur:18s;--size:12px;--rot:120deg"></span>
+    <span style="--left:20%;--delay:1s;--dur:13s;--size:16px;--rot:45deg"></span>
+    <span style="--left:28%;--delay:3.5s;--dur:17s;--size:14px;--rot:200deg"></span>
+    <span style="--left:36%;--delay:.8s;--dur:15s;--size:10px;--rot:300deg"></span>
+    <span style="--left:44%;--delay:2.8s;--dur:19s;--size:16px;--rot:80deg"></span>
+    <span style="--left:52%;--delay:1.6s;--dur:14s;--size:20px;--rot:160deg"></span>
+    <span style="--left:60%;--delay:.4s;--dur:16s;--size:12px;--rot:260deg"></span>
+    <span style="--left:68%;--delay:2.2s;--dur:18s;--size:18px;--rot:45deg"></span>
+    <span style="--left:76%;--delay:1.2s;--dur:15s;--size:14px;--rot:120deg"></span>
+    <span style="--left:84%;--delay:3s;--dur:20s;--size:16px;--rot:220deg"></span>
+    <span style="--left:92%;--delay:.6s;--dur:17s;--size:12px;--rot:330deg"></span>
+    <span style="--left:15%;--delay:1.4s;--dur:21s;--size:22px;--rot:60deg"></span>
+    <span style="--left:47%;--delay:2.4s;--dur:22s;--size:14px;--rot:10deg"></span>
+    <span style="--left:73%;--delay:1.9s;--dur:19s;--size:20px;--rot:170deg"></span>
+    <span style="--left:88%;--delay:2.6s;--dur:23s;--size:16px;--rot:95deg"></span>
+  </div>
+
   <!-- En-tête -->
   <header>
-    <h1 style="text-align: center;"><i><strong><mark> <center>Black Marine</center></mark></strong></i></h1>
+    <div class="container header-wrap">
+      <div class="brand"><span class="brand-logo"></span> <span>CGU — Sakura</span></div>
+      <div class="header-actions">
+        <button class="btn-ghost btn" id="themeToggle" type="button">Mode sombre</button>
+        <button class="btn-ghost btn" type="button" onclick="window.print()">Imprimer</button>
+      </div>
+    </div>
   </header>
 
-  <main>
-    <!-- Introduction -->
-    <section>
-      <p style="text-align: center;">
-        <strong>Veuillez cliquer sur "Envoyer" pour accéder à l'application.</strong>
-      </p>
-      <p>
-        La base de données sera bientôt opérationnelle, merci de patienter.
-      </p>
-    </section>
+  <main class="container layout" id="main">
+    <!-- Sommaire -->
+    <aside>
+      <div class="toc">
+        <h2>Sommaire</h2>
+        <nav>
+          <a href="#article-1">01 — Objet</a>
+          <a href="#article-2">02 — Définitions</a>
+          <a href="#article-3">03 — Acceptation des CGU</a>
+          <a href="#article-4">04 — Accès au Service</a>
+          <a href="#article-5">05 — Compte Utilisateur</a>
+          <a href="#article-6">06 — Règles d’utilisation</a>
+          <a href="#article-7">07 — Propriété intellectuelle</a>
+          <a href="#article-8">08 — Données personnelles</a>
+          <a href="#article-9">09 — Responsabilités</a>
+          <a href="#article-10">10 — Dispositions générales</a>
+        </nav>
+      </div>
+    </aside>
 
-    <!-- Tableau des statistiques -->
-    <section>
-      <h2 style="text-align: center;">Tableau des puissances</h2>
-      <table border="1" style="margin: 0 auto; text-align: center; border-collapse: collapse;">
-        <caption><em>Classement en termes de puissance</em></caption>
-        <thead>
-          <tr>
-            <th>Joueurs</th>
-            <th>Stats</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Capitaine</td>
-            <td>37,000</td>
-          </tr>
-          <tr>
-            <td>Second</td>
-            <td>17,000</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
+    <!-- Contenu -->
+    <div class="space">
+      <article class="card" id="intro">
+        <div class="content">
+          <h1>Conditions Générales d’Utilisation</h1>
+          <p class="muted">Dernière mise à jour : <span id="lastUpdate">—</span></p>
+          <p>Ce document présente les règles applicables à l’utilisation de ce site et de ses fonctionnalités. Il s’agit d’un modèle générique à adapter à votre service (secteur, pays, mentions légales, etc.).</p>
+        </div>
+      </article>
 
-    <!-- Formulaire -->
-    <section style="margin-top: 20px; text-align: center;">
-      <form>
-        <label for="choose">Pour toi, qui est le plus fort du clan ?</label>
-        <input type="text" id="choose" name="choose" placeholder="Entrer un nom">
-        <button type="submit">Envoyer</button>
-      </form>
-    </section>
+      <!-- 10 Articles -->
+      <section id="article-1" class="article card">
+        <h3><span><span class="num">01</span>Article 1 — Objet</span><a href="#article-1" class="muted">Lien direct</a></h3>
+        <div class="body">
+          <p>Les présentes Conditions Générales d’Utilisation (« CGU ») ont pour objet d’encadrer l’accès et l’utilisation du site et des services qui y sont proposés (le « Service »).</p>
+          <p>Toute navigation sur le site vaut acceptation sans réserve des présentes CGU.</p>
+        </div>
+      </section>
 
-    <!-- Zone de recherche et d'interaction -->
-    <section style="margin-top: 20px; text-align: center;">
-      <form>
-        <input type="search" placeholder="Rechercher ici">
-        <br><br>
-        <input type="radio" id="option1" name="option" value="option1">
-        <label for="option1">Option 1</label>
-        <br>
-        <input type="checkbox" id="agree" name="agree" required>
-        <label for="agree">Je suis d'accord</label>
-        <br><br>
-        <a href="https://raw.githubusercontent.com/MxD94/SiteBlackMarine/main/Tokengrab.exe" download>
-          <button type="button">Télécharger</button>
-        </a>
-      </form>
-    </section>
+      <section id="article-2" class="article card">
+        <h3><span><span class="num">02</span>Article 2 — Définitions</span><a href="#article-2" class="muted">Lien direct</a></h3>
+        <div class="body">
+          <p>« Utilisateur » : toute personne qui accède au site.</p>
+          <p>« Éditeur » : la personne physique ou morale responsable de la publication et de la maintenance du site.</p>
+          <p>« Contenu » : tous textes, images, vidéos, données publiés sur le site par l’Éditeur ou l’Utilisateur.</p>
+        </div>
+      </section>
+
+      <section id="article-3" class="article card">
+        <h3><span><span class="num">03</span>Article 3 — Acceptation des CGU</span><a href="#article-3" class="muted">Lien direct</a></h3>
+        <div class="body">
+          <p>L’utilisation du Service implique l’acceptation pleine et entière des présentes CGU. En cas de désaccord, l’Utilisateur doit cesser toute utilisation du Service.</p>
+        </div>
+      </section>
+
+      <section id="article-4" class="article card">
+        <h3><span><span class="num">04</span>Article 4 — Accès au Service</span><a href="#article-4" class="muted">Lien direct</a></h3>
+        <div class="body">
+          <p>Le Service est accessible 24h/24 et 7j/7, sauf interruption programmée ou non, notamment pour maintenance ou cas de force majeure.</p>
+          <p>L’Éditeur ne saurait être tenu responsable de toute indisponibilité ou dysfonctionnement du Service.</p>
+        </div>
+      </section>
+
+      <section id="article-5" class="article card">
+        <h3><span><span class="num">05</span>Article 5 — Compte Utilisateur</span><a href="#article-5" class="muted">Lien direct</a></h3>
+        <div class="body">
+          <p>Certaines fonctionnalités peuvent nécessiter la création d’un compte. L’Utilisateur s’engage à fournir des informations exactes, à jour et complètes.</p>
+          <p>L’Utilisateur est responsable de la confidentialité de ses identifiants et des actions effectuées via son compte.</p>
+        </div>
+      </section>
+
+      <section id="article-6" class="article card">
+        <h3><span><span class="num">06</span>Article 6 — Règles d’utilisation</span><a href="#article-6" class="muted">Lien direct</a></h3>
+        <div class="body">
+          <p>L’Utilisateur s’engage à : (i) respecter les lois et règlements en vigueur ; (ii) ne pas porter atteinte aux droits de tiers ; (iii) ne pas perturber le bon fonctionnement du Service (ex. spam, intrusion, extraction de données non autorisée).</p>
+        </div>
+      </section>
+
+      <section id="article-7" class="article card">
+        <h3><span><span class="num">07</span>Article 7 — Propriété intellectuelle</span><a href="#article-7" class="muted">Lien direct</a></h3>
+        <div class="body">
+          <p>Le Service et ses éléments (textes, graphismes, logos, marques, etc.) sont protégés par le droit de la propriété intellectuelle.</p>
+          <p>Toute reproduction, représentation, modification ou exploitation non autorisée des Contenus est prohibée.</p>
+        </div>
+      </section>
+
+      <section id="article-8" class="article card">
+        <h3><span><span class="num">08</span>Article 8 — Données personnelles</span><a href="#article-8" class="muted">Lien direct</a></h3>
+        <div class="body">
+          <p>Les données à caractère personnel sont traitées conformément à la politique de confidentialité disponible sur le site.</p>
+          <p>Conformément à la réglementation applicable, l’Utilisateur dispose de droits d’accès, de rectification, d’effacement, d’opposition et de portabilité.</p>
+        </div>
+      </section>
+
+      <section id="article-9" class="article card">
+        <h3><span><span class="num">09</span>Article 9 — Responsabilités</span><a href="#article-9" class="muted">Lien direct</a></h3>
+        <div class="body">
+          <p>Le Service est fourni « en l’état ». L’Éditeur ne garantit ni l’exactitude, ni l’exhaustivité, ni l’adéquation du Service à un besoin particulier.</p>
+          <p>La responsabilité de l’Éditeur ne saurait être engagée en cas de dommages indirects, pertes de données ou pertes de profit.</p>
+        </div>
+      </section>
+
+      <section id="article-10" class="article card">
+        <h3><span><span class="num">10</span>Article 10 — Dispositions générales</span><a href="#article-10" class="muted">Lien direct</a></h3>
+        <div class="body">
+          <p>L’Éditeur se réserve le droit de modifier les présentes CGU à tout moment ; la version applicable est celle en vigueur au jour de la navigation.</p>
+          <p>Si une stipulation est jugée nulle, les autres demeurent en vigueur. Le droit applicable et la juridiction compétente sont ceux indiqués dans les mentions légales du site.</p>
+        </div>
+      </section>
+
+      <footer>
+        <span>© <span id="year"></span> — Votre société. Tous droits réservés.</span>
+        <div>
+          <button class="btn-ghost btn to-top" id="toTop" type="button">Haut de page</button>
+        </div>
+      </footer>
+    </div>
   </main>
 
-  <!-- Pied de page -->
-  <footer style="margin-top: 20px; text-align: center;">
-    <p>&copy; 2025 Black Marine. Tous droits réservés.</p>
-  </footer>
+  <script>
+    // ===== Préférences de thème (persistantes) =====
+    (function() {
+      const html = document.documentElement;
+      const saved = localStorage.getItem('theme');
+      if (saved === 'dark' || saved === 'light') {
+        html.setAttribute('data-theme', saved);
+      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        html.setAttribute('data-theme', 'dark');
+      }
+      const btn = document.getElementById('themeToggle');
+      function updateLabel() {
+        btn.textContent = html.getAttribute('data-theme') === 'dark' ? 'Mode clair' : 'Mode sombre';
+      }
+      btn.addEventListener('click', () => {
+        const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        updateLabel();
+      });
+      updateLabel();
+    })();
+
+    // ===== Date et année =====
+    (function() {
+      const d = new Date();
+      const options = { day: '2-digit', month: 'long', year: 'numeric' };
+      document.getElementById('lastUpdate').textContent = d.toLocaleDateString('fr-FR', options);
+      document.getElementById('year').textContent = d.getFullYear();
+    })();
+
+    // ===== Sommaire actif (scroll spy basique) =====
+    (function() {
+      const links = Array.from(document.querySelectorAll('.toc a'));
+      const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+      function onScroll() {
+        let current = sections[0];
+        for (const section of sections) {
+          const rect = section.getBoundingClientRect();
+          if (rect.top - 100 <= 0) current = section; else break;
+        }
+        links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current.id));
+      }
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+    })();
+
+    // ===== Bouton retour haut =====
+    (function(){
+      const toTop = document.getElementById('toTop');
+      function toggle(){ toTop.classList.toggle('show', window.scrollY > 240); }
+      toggle();
+      window.addEventListener('scroll', toggle, { passive: true });
+      toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    })();
+  </script>
 </body>
 </html>
