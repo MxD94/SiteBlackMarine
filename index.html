@@ -3,21 +3,28 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Kyoto ｼ🌸 - CGU (Conditions générales d'utilisations)</title>
-  <meta name="description" content="Conditions Générales d’Utilisation — Thème japonais Sakura (clair/sombre)" />
+  <title>Kyoto ｼ🌸 — CGU</title>
+  <meta name="description" content="CGU — Thème Sakura, mobile-first, fun CSS/JS avec mode sombre" />
   <style>
-    /* ===== Thème (variables CSS) ===== */
+    /* =========================
+       Variables & Thèmes
+    ========================== */
     :root {
       --bg: #ffffff;
-      --surface: #ffffffd9; /* cartes */
-      --surface-muted: #ffffffcc; /* éléments secondaires */
-      --ink: #1f2937; /* texte principal */
-      --ink-muted: #6b7280; /* texte secondaire */
-      --accent: #f4b4c8; /* rose sakura */
-      --accent-2: #fce7f3; /* rose pâle */
-      --accent-deep: #f9c6d8; /* rose plus soutenu */
-      --outline: #fce7f3; /* bordures délicates */
+      --surface: #ffffffd9;
+      --surface-muted: #ffffffcc;
+      --ink: #1f2937;
+      --ink-muted: #6b7280;
+      --accent: #f4b4c8;
+      --accent-2: #fce7f3;
+      --accent-deep: #f9c6d8;
+      --outline: #fce7f3;
       --shadow: 0 8px 30px rgba(249, 198, 216, 0.25);
+      --radius: 16px;
+      --radius-sm: 12px;
+      --space: clamp(14px, 2vw, 18px);
+      --header-h: 60px;
+      --max-w: 1080px;
     }
     [data-theme="dark"] {
       --bg: #0f1115;
@@ -26,130 +33,120 @@
       --ink: #e5e7eb;
       --ink-muted: #a1a1aa;
       --accent: #f4b4c8;
-      --accent-2: #3a2a33; /* rose/gris pour fonds */
+      --accent-2: #3a2a33;
       --accent-deep: #a64d6a;
       --outline: #2b2430;
       --shadow: 0 10px 30px rgba(166, 77, 106, 0.25);
     }
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) {
-        --bg: #0f1115;
-        --surface: #161922e6;
-        --surface-muted: #161922cc;
-        --ink: #e5e7eb;
-        --ink-muted: #a1a1aa;
-        --accent: #f4b4c8;
-        --accent-2: #3a2a33;
-        --accent-deep: #a64d6a;
-        --outline: #2b2430;
-        --shadow: 0 10px 30px rgba(166, 77, 106, 0.25);
+        --bg: #0f1115; --surface: #161922e6; --surface-muted: #161922cc;
+        --ink: #e5e7eb; --ink-muted: #a1a1aa; --accent: #f4b4c8;
+        --accent-2: #3a2a33; --accent-deep: #a64d6a; --outline: #2b2430; --shadow: 0 10px 30px rgba(166,77,106,.25);
       }
     }
 
-    /* ===== Base ===== */
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
-      color: var(--ink); background: var(--bg);
-      line-height: 1.6;
+    /* =========================
+       Base / Layout
+    ========================== */
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Noto Sans","Apple Color Emoji","Segoe UI Emoji";color:var(--ink);background:var(--bg);line-height:1.6}
+    .container{max-width:var(--max-w);margin:0 auto;padding:0 var(--space)}
+    .hidden{display:none}
+
+    /* Sakura BG */
+    .sakura-bg{position:fixed;inset:0;z-index:-2;pointer-events:none;background:
+      radial-gradient(1200px 600px at 80% -10%,var(--accent-2) 0%,transparent 60%),
+      radial-gradient(900px 500px at 10% 0%,var(--surface-muted) 0%,transparent 60%),
+      linear-gradient(180deg,var(--bg),var(--surface-muted))}
+    .petals{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+    .petals span{position:absolute;top:-10vh;opacity:.6;filter:blur(.2px);width:var(--size,12px);height:var(--size,12px);left:var(--left,50%);background:radial-gradient(ellipse at 30% 30%,var(--accent-deep),var(--accent-2));border-radius:40% 60% 60% 40% / 40% 50% 50% 60%;transform:rotate(var(--rot,0deg));animation:fall var(--dur,14s) linear var(--delay,0s) infinite}
+    @keyframes fall{0%{transform:translateY(-5vh) rotate(0);opacity:0}10%{opacity:.8}100%{transform:translateY(110vh) rotate(360deg);opacity:0}}
+    @media (prefers-reduced-motion: reduce){.petals{display:none}}
+
+    /* Header */
+    header{position:sticky;top:0;z-index:50;backdrop-filter:saturate(1.2) blur(8px);background:color-mix(in oklab,var(--surface) 85%,transparent);border-bottom:1px solid var(--outline)}
+    .header-wrap{height:var(--header-h);display:flex;align-items:center;gap:.75rem}
+    .brand{display:flex;align-items:center;gap:.6rem;font-weight:800;letter-spacing:.2px}
+    .brand-logo{width:28px;height:28px;border-radius:50%;background:radial-gradient(ellipse at 30% 30%,var(--accent-deep),var(--accent));box-shadow:0 0 0 2px var(--outline) inset}
+    .brand-text{background:linear-gradient(90deg,#f79bba, #ec4899, #f4b4c8);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .header-actions{margin-left:auto;display:flex;align-items:center;gap:.5rem}
+
+    /* Buttons + ripple */
+    .btn{appearance:none;border:1px solid transparent;background:var(--accent);color:#111827;border-radius:var(--radius-sm);padding:.5rem .8rem;font-weight:700;cursor:pointer;box-shadow:var(--shadow);position:relative;overflow:hidden}
+    .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--outline)}
+    .btn svg{width:18px;height:18px;vertical-align:-3px;margin-right:.35rem}
+    .btn::after{content:"";position:absolute;inset:auto;left:var(--r-x);top:var(--r-y);width:0;height:0;background:color-mix(in oklab,var(--accent) 50%,white);opacity:.5;border-radius:50%;transform:translate(-50%,-50%);transition:width .45s ease,height .45s ease}
+    .btn.ripple::after{width:240px;height:240px}
+
+    /* Top progress */
+    .progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,#ec4899,#f4b4c8);z-index:60}
+
+    /* Layout */
+    .layout{display:grid;grid-template-columns:280px minmax(0,1fr);gap:1rem}
+    @media (max-width: 980px){.layout{grid-template-columns:1fr}}
+
+    /* TOC (sidebar + sheet mobile) */
+    aside{position:sticky;top:calc(var(--header-h) + 20px);align-self:start}
+    .toc{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--outline)}
+    .toc h2{margin:0;padding:1rem 1rem .25rem;font-size:1rem;display:flex;align-items:center;gap:.5rem}
+    .toc nav{max-height:60vh;overflow:auto;padding:.5rem 0 1rem}
+    .toc a{display:block;padding:.55rem .9rem;margin:.25rem .6rem;border-radius:12px;text-decoration:none;color:var(--ink);border:1px solid transparent}
+    .toc a:hover{background:color-mix(in oklab,var(--accent-2) 55%,transparent)}
+    .toc a.active{background:color-mix(in oklab,var(--accent-2) 85%,transparent);border-color:var(--outline)}
+
+    /* Mobile sheet */
+    .sheet-btn{display:none}@media(max-width:980px){.sheet-btn{display:inline-flex}}
+    .sheet{position:fixed;inset:0;display:grid;grid-template-rows:1fr;z-index:70;pointer-events:none}
+    .sheet .backdrop{background:rgba(0,0,0,.32);opacity:0;transition:opacity .2s;}
+    .sheet .panel{align-self:end;background:var(--surface);border:1px solid var(--outline);border-top-left-radius:20px;border-top-right-radius:20px;transform:translateY(100%);transition:transform .25s ease;box-shadow:var(--shadow);max-height:70vh;overflow:auto}
+    .sheet.open{pointer-events:auto}
+    .sheet.open .backdrop{opacity:1}
+    .sheet.open .panel{transform:translateY(0)}
+
+    /* Cards */
+    .card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--outline);box-shadow:var(--shadow);transform:translateY(4px);opacity:0;transition:transform .4s cubic-bezier(.2,.8,.2,1),opacity .4s}
+    .card.reveal{transform:none;opacity:1}
+    .card .content{padding:1rem 1.25rem}
+    .card h1{margin:0 0 .25rem;font-size:clamp(1.4rem, 2.6vw, 1.9rem);letter-spacing:.2px}
+    .muted{color:var(--ink-muted);font-size:.92rem}
+
+    section.article{scroll-margin-top:calc(var(--header-h) + 20px)}
+    .article h3{margin:0;padding:1rem 1.25rem .35rem;font-size:1.15rem;display:flex;align-items:baseline;justify-content:space-between;gap:.5rem}
+    .article .num{color:#ec4899;font-weight:800;margin-right:.5rem}
+    .article .body{padding:.2rem 1.25rem 1rem;color:var(--ink)}
+    .article .body p{margin:.6rem 0}
+
+    /* Accordion mobile */
+    @media (max-width: 980px){
+      .article[aria-expanded="false"] .body{display:none}
+      .article h3{cursor:pointer}
     }
-    .container { max-width: 1120px; margin: 0 auto; padding: 1rem; }
-    .hidden { display: none; }
 
-    /* ===== Arrière-plan Sakura ===== */
-    .sakura-bg {
-      position: fixed; inset: 0; z-index: -2; pointer-events: none;
-      background:
-        radial-gradient(1200px 600px at 80% -10%, var(--accent-2) 0%, transparent 60%),
-        radial-gradient(900px 500px at 10% 0%, var(--surface-muted) 0%, transparent 60%),
-        linear-gradient(180deg, var(--bg), var(--surface-muted));
-    }
-    .petals { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
-    .petals span {
-      position: absolute; top: -10vh; opacity: .6; filter: blur(.2px);
-      width: var(--size, 12px); height: var(--size, 12px);
-      left: var(--left, 50%);
-      background: radial-gradient(ellipse at 30% 30%, var(--accent-deep), var(--accent-2));
-      border-radius: 40% 60% 60% 40% / 40% 50% 50% 60%;
-      transform: rotate(var(--rot, 0deg));
-      animation: fall var(--dur, 14s) linear var(--delay, 0s) infinite;
-    }
-    @keyframes fall {
-      0% { transform: translateY(-5vh) rotate(0deg); opacity: 0; }
-      10% { opacity: .8; }
-      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
-    }
+    /* Footer */
+    footer{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;justify-content:space-between;color:var(--ink-muted);font-size:.9rem;padding:1rem 0}
 
-    /* ===== Header ===== */
-    header {
-      position: sticky; top: 0; z-index: 40;
-      backdrop-filter: saturate(1.2) blur(8px);
-      background: color-mix(in oklab, var(--surface) 85%, transparent);
-      border-bottom: 1px solid var(--outline);
-    }
-    .header-wrap { display: flex; align-items: center; gap: .75rem; padding: .75rem 1rem; }
-    .brand { display: flex; align-items: center; gap: .5rem; font-weight: 700; letter-spacing: .2px; }
-    .brand-logo { width: 24px; height: 24px; display: inline-block; border-radius: 50%;
-      background: radial-gradient(ellipse at 30% 30%, var(--accent-deep), var(--accent));
-      box-shadow: 0 0 0 2px var(--outline) inset;
-    }
-    .header-actions { margin-left: auto; display: flex; gap: .5rem; align-items: center; }
+    /* Back to top */
+    .to-top{position:fixed;right:16px;bottom:16px;border-radius:16px;padding:.6rem .9rem;opacity:0;transform:translateY(8px);pointer-events:none}
+    .to-top.show{opacity:1;transform:translateY(0);pointer-events:auto}
 
-    /* ===== Boutons ===== */
-    .btn { appearance: none; border: 1px solid transparent; background: var(--accent);
-      color: #111827; border-radius: 12px; padding: .5rem .75rem; font-weight: 600; cursor: pointer;
-      box-shadow: var(--shadow); transition: transform .12s ease, box-shadow .2s ease, background .2s ease;
-    }
-    .btn:hover { transform: translateY(-1px); }
-    .btn:active { transform: translateY(0); }
-    .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--outline); }
+    /* Search overlay */
+    .searchbar{position:relative}
+    .searchbar input{width:0;opacity:0;transition:width .25s ease, opacity .2s ease;border-radius:12px;border:1px solid var(--outline);padding:.5rem .8rem;background:var(--surface);color:var(--ink)}
+    .searchbar.open input{width:220px;opacity:1}
+    @media(max-width:720px){.searchbar.open input{width:60vw}}
+    mark{background:color-mix(in oklab,#fca5c0 60%, transparent);padding:0 .2em;border-radius:6px}
 
-    /* ===== Disposition ===== */
-    .layout { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 1rem; }
-    @media (max-width: 980px) { .layout { grid-template-columns: 1fr; } }
-
-    /* ===== Sommaire ===== */
-    aside { position: sticky; top: 90px; align-self: start; }
-    .toc { background: var(--surface); border-radius: 16px; box-shadow: var(--shadow); border: 1px solid var(--outline); }
-    .toc h2 { margin: 0; padding: 1rem 1rem .25rem; font-size: 1rem; display: flex; align-items: center; gap: .5rem; }
-    .toc nav { max-height: 60vh; overflow: auto; padding: .5rem 0 1rem; }
-    .toc a { display: block; padding: .5rem .75rem; margin: .25rem .5rem; border-radius: 12px; text-decoration: none; color: var(--ink); border: 1px solid transparent; }
-    .toc a:hover { background: color-mix(in oklab, var(--accent-2) 55%, transparent); }
-    .toc a.active { background: color-mix(in oklab, var(--accent-2) 85%, transparent); border-color: var(--outline); }
-
-    /* ===== Cartes / Sections ===== */
-    .card { background: var(--surface); border-radius: 16px; border: 1px solid var(--outline); box-shadow: var(--shadow); }
-    .card .content { padding: 1rem 1.25rem; }
-    .card h1 { margin: 0 0 .25rem; font-size: 1.8rem; letter-spacing: .2px; }
-    .muted { color: var(--ink-muted); font-size: .9rem; }
-
-    section.article { scroll-margin-top: 90px; }
-    .article h3 { margin: 0; padding: 1rem 1.25rem .5rem; font-size: 1.2rem; display: flex; align-items: baseline; justify-content: space-between; }
-    .article .num { color: #ec4899; font-weight: 700; margin-right: .5rem; }
-    .article .body { padding: .5rem 1.25rem 1rem; color: var(--ink); }
-    .article .body p { margin: .6rem 0; }
-
-    /* ===== Pied de page ===== */
-    footer { display: flex; gap: .5rem; align-items: center; justify-content: space-between; color: var(--ink-muted); font-size: .82rem; padding: 1rem 0; }
-
-    /* ===== Bouton retour haut ===== */
-    .to-top { position: fixed; right: 16px; bottom: 16px; border-radius: 16px; padding: .6rem .9rem; opacity: 0; transform: translateY(8px); pointer-events: none; }
-    .to-top.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
-
-    /* ===== Impression ===== */
-    @media print {
-      header, aside, .to-top { display: none !important; }
-      .layout { grid-template-columns: 1fr !important; }
-      .card, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; box-shadow: none !important; }
-    }
+    /* Print */
+    @media print{header,aside,.to-top,.sheet{display:none!important}.layout{grid-template-columns:1fr!important}.card,body{-webkit-print-color-adjust:exact;print-color-adjust:exact;box-shadow:none!important}}
   </style>
 </head>
 <body>
+  <div class="progress" id="progress"></div>
   <!-- Fond sakura -->
   <div class="sakura-bg" aria-hidden="true"></div>
   <div class="petals" aria-hidden="true">
-    <!-- Petales (positions pré-définies pour un rendu doux) -->
     <span style="--left:5%;--delay:.2s;--dur:16s;--size:18px;--rot:15deg"></span>
     <span style="--left:12%;--delay:2s;--dur:18s;--size:12px;--rot:120deg"></span>
     <span style="--left:20%;--delay:1s;--dur:13s;--size:16px;--rot:45deg"></span>
@@ -171,20 +168,34 @@
   <!-- En-tête -->
   <header>
     <div class="container header-wrap">
-      <div class="brand"><span class="brand-logo"></span> <span>Conditions Générales d'Utilisation (CGU)</span></div>
+      <div class="brand">
+        <span class="brand-logo" aria-hidden="true"></span>
+        <span class="brand-text">Kyoto ｼ🌸 — CGU</span>
+      </div>
       <div class="header-actions">
-        <button class="btn-ghost btn" id="themeToggle" type="button">Mode sombre</button>
-        <button class="btn-ghost btn" type="button" onclick="window.print()">Imprimer</button>
+        <div class="searchbar" id="searchbar">
+          <button class="btn btn-ghost" id="searchToggle" aria-label="Rechercher (/)" title="Rechercher (/)" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="7" stroke-width="2"/><line x1="21" y1="21" x2="16.65" y2="16.65" stroke-width="2"/></svg>
+            Rechercher
+          </button>
+          <input id="searchInput" type="search" placeholder="Rechercher un article…" aria-label="Rechercher" />
+        </div>
+        <button class="btn btn-ghost" id="tocOpen" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="3" y1="6" x2="21" y2="6" stroke-width="2"/><line x1="3" y1="12" x2="21" y2="12" stroke-width="2"/><line x1="3" y1="18" x2="21" y2="18" stroke-width="2"/></svg>
+          Sommaire
+        </button>
+        <button class="btn btn-ghost" id="themeToggle" type="button" title="Basculer le thème">🌞/🌙</button>
+        <button class="btn btn-ghost" type="button" id="printBtn">🖨️ Imprimer</button>
       </div>
     </div>
   </header>
 
   <main class="container layout" id="main">
-    <!-- Sommaire -->
+    <!-- Sommaire (sidebar) -->
     <aside>
       <div class="toc">
         <h2>Sommaire</h2>
-        <nav>
+        <nav id="tocNav">
           <a href="#article-1">01 — Objet</a>
           <a href="#article-2">02 — Introduction aux services</a>
           <a href="#article-3">03 — Mentions légales</a>
@@ -202,25 +213,24 @@
     <div class="space">
       <article class="card" id="intro">
         <div class="content">
-          <h1><center>Conditions Générales d’Utilisation</center></h1>
+          <h1 style="text-align:center">Conditions Générales d’Utilisation</h1>
           <p class="muted">Dernière mise à jour : <span id="lastUpdate">—</span></p>
           <p>Ce document présente les règles applicables à l’utilisation de ce site et de ses fonctionnalités. Il s’agit d’un modèle générique à adapter à votre service (secteur, pays, mentions légales, etc.).</p>
         </div>
       </article>
 
-      <!-- 10 Articles -->
-      <section id="article-1" class="article card">
-        <h3><span><span class="num">01</span>Article 1 — Objet</span><a href="#article-1" class="muted">Lien direct</a></h3>
+      <!-- Articles (extraits de ton code) -->
+      <section id="article-1" class="article card" aria-expanded="true">
+        <h3><span><span class="num">01</span>Article 1 — Objet</span><a href="#article-1" class="muted linkcopy">Lien direct</a></h3>
         <div class="body">
-          <p>Les présentes Conditions Générales d’Utilisation (CGU) encadrent juridiquement l’utilisation des services de Kyoto ｼ🌸, incluant son l’application ainsi que son futur tableau de bord.
-
-Les CGU constituent le contrat entre les services proposés, ci-après nommé “Kyoto ｼ🌸”, le “Propriétaire” du projet et l’”Utilisateur", accédant aux services par l’intermédiaire de l’application. L’accès aux services signifie l’acceptation des présentes Conditions Générales d’Utilisation.</p>
+          <p>Les présentes Conditions Générales d’Utilisation (CGU) encadrent juridiquement l’utilisation des services de Kyoto ｼ🌸, incluant son l’application ainsi que son futur tableau de bord.</p>
+          <p>Les CGU constituent le contrat entre les services proposés, ci-après nommé “Kyoto ｼ🌸”, le “Propriétaire” du projet et l’”Utilisateur", accédant aux services par l’intermédiaire de l’application. L’accès aux services signifie l’acceptation des présentes Conditions Générales d’Utilisation.</p>
           <p>Toute navigation sur le site vaut acceptation sans réserve des présentes CGU.</p>
         </div>
       </section>
 
-      <section id="article-2" class="article card">
-        <h3><span><span class="num">02</span>Article 2 — Introduction aux services</span><a href="#article-2" class="muted">Lien direct</a></h3>
+      <section id="article-2" class="article card" aria-expanded="true">
+        <h3><span><span class="num">02</span>Article 2 — Introduction aux services</span><a href="#article-2" class="muted linkcopy">Lien direct</a></h3>
         <div class="body">
           <p>« Utilisateur » : toute personne qui accède au site.</p>
           <p>« Éditeur » : la personne physique ou morale responsable de la publication et de la maintenance du site.</p>
@@ -228,69 +238,57 @@ Les CGU constituent le contrat entre les services proposés, ci-après nommé �
         </div>
       </section>
 
-      <section id="article-3" class="article card">
-        <h3><span><span class="num">03</span>Article 3 — Mentions légales</span><a href="#article-3" class="muted">Lien direct</a></h3>
+      <section id="article-3" class="article card" aria-expanded="true">
+        <h3><span><span class="num">03</span>Article 3 — Mentions légales</span><a href="#article-3" class="muted linkcopy">Lien direct</a></h3>
         <div class="body">
           <p>Conformément à l'article 6-III de la loi n°2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique, l'éditeur n'est pas tenu de divulguer ses informations personnelles dans les mentions légales.</p>
-
-          <p> Hébergeur :
-
-           <br> Cloudzy AI Information Technology L.L.C </br>
-           <br> Register No : 2312897 </br>
-           <br> sales@cloudzy.com </br>
-           <br> +971 58 191 0073 </br>
-           <br> Office No. B20 </br>
-           <br> Khaled Mohammed Building </br>
-           <br> Horalanz, Dubai </br>
-           <br> United Arab Emirates </br></p>
+          <p>Hébergeur :</p>
+          <p>Cloudzy AI Information Technology L.L.C<br>Register No : 2312897<br>sales@cloudzy.com<br>+971 58 191 0073<br>Office No. B20<br>Khaled Mohammed Building<br>Horalanz, Dubai<br>United Arab Emirates</p>
         </div>
       </section>
 
-      <section id="article-4" class="article card">
-        <h3><span><span class="num">04</span>Article 4 — Accès au Service</span><a href="#article-4" class="muted">Lien direct</a></h3>
+      <section id="article-4" class="article card" aria-expanded="true">
+        <h3><span><span class="num">04</span>Article 4 — Accès au Service</span><a href="#article-4" class="muted linkcopy">Lien direct</a></h3>
         <div class="body">
           <p>Le Service est accessible 24h/24 et 7j/7, sauf interruption programmée ou non, notamment pour maintenance ou cas de force majeure.</p>
           <p>L’Éditeur ne saurait être tenu responsable de toute indisponibilité ou dysfonctionnement du Service.</p>
         </div>
       </section>
 
-      <section id="article-5" class="article card">
-        <h3><span><span class="num">05</span>Article 5 — Gestion de l'application</span><a href="#article-5" class="muted">Lien direct</a></h3>
+      <section id="article-5" class="article card" aria-expanded="true">
+        <h3><span><span class="num">05</span>Article 5 — Gestion de l'application</span><a href="#article-5" class="muted linkcopy">Lien direct</a></h3>
         <div class="body">
           <p>Certaines fonctionnalités peuvent nécessiter la création d’un compte. L’Utilisateur s’engage à fournir des informations exactes, à jour et complètes.</p>
           <p>L’Utilisateur est responsable de la confidentialité de ses identifiants et des actions effectuées via son compte.</p>
         </div>
       </section>
 
-      <section id="article-6" class="article card">
-        <h3><span><span class="num">06</span>Article 6 — Règles d’utilisation</span><a href="#article-6" class="muted">Lien direct</a></h3>
+      <section id="article-6" class="article card" aria-expanded="true">
+        <h3><span><span class="num">06</span>Article 6 — Règles d’utilisation</span><a href="#article-6" class="muted linkcopy">Lien direct</a></h3>
         <div class="body">
           <p>L’Utilisateur s’engage à : (i) respecter les lois et règlements en vigueur ; (ii) ne pas porter atteinte aux droits de tiers ; (iii) ne pas perturber le bon fonctionnement du Service (ex. spam, intrusion, extraction de données non autorisée).</p>
         </div>
       </section>
 
-      <section id="article-7" class="article card">
-        <h3><span><span class="num">07</span>Article 7 — Politique de confidentialité </span><a href="#article-7" class="muted">Lien direct</a></h3>
+      <section id="article-7" class="article card" aria-expanded="true">
+        <h3><span><span class="num">07</span>Article 7 — Politique de confidentialité</span><a href="#article-7" class="muted linkcopy">Lien direct</a></h3>
         <div class="body">
-          <p>Le bot respecte la confidentialité des utilisateurs et se conforme au Règlement Général sur la Protection des Données (RGPD). Seules les informations strictement nécessaires au bon fonctionnement du bot (par exemple : pseudos, Nom du serveur, adresse mail (optionnel), ID utilisateur...) peuvent être temporairement traitées. Aucune donnée sensible n’est collectée, stockée ou transmise à des tiers sans consentement explicite.
-Conformément au RGPD, chaque utilisateur dispose d’un droit d’accès, de rectification et de suppression de ses données personnelles. Toute demande relative à ces droits peut être adressée directement à l’équipe en charge du bot.</p>
-          <p> Nous plaçons la protection des données et la confidentialité des utilisateurs au centre de nos priorités. Le bot est conçu de manière à ne collecter, ne stocker ni ne partager aucune donnée personnelle.
-             Conformément au Règlement Général sur la Protection des Données (RGPD – UE 2016/679) :
-             Aucune donnée personnelle n’est enregistrée, transférée ou exploitée à des fins commerciales ou publicitaires.
-             Aucune information n’est transmise à des tiers, que ce soit gratuitement ou contre rémunération.</p>
+          <p>Le bot respecte la confidentialité des utilisateurs et se conforme au Règlement Général sur la Protection des Données (RGPD). Seules les informations strictement nécessaires au bon fonctionnement du bot (par exemple : pseudos, Nom du serveur, adresse mail (optionnel), ID utilisateur...) peuvent être temporairement traitées. Aucune donnée sensible n’est collectée, stockée ou transmise à des tiers sans consentement explicite.</p>
+          <p>Conformément au RGPD, chaque utilisateur dispose d’un droit d’accès, de rectification et de suppression de ses données personnelles. Toute demande relative à ces droits peut être adressée directement à l’équipe en charge du bot.</p>
+          <p>Nous plaçons la protection des données et la confidentialité des utilisateurs au centre de nos priorités. Le bot est conçu de manière à ne collecter, ne stocker ni ne partager aucune donnée personnelle.</p>
         </div>
       </section>
 
-      <section id="article-8" class="article card">
-        <h3><span><span class="num">08</span>Article 8 — Données personnelles</span><a href="#article-8" class="muted">Lien direct</a></h3>
+      <section id="article-8" class="article card" aria-expanded="true">
+        <h3><span><span class="num">08</span>Article 8 — Données personnelles</span><a href="#article-8" class="muted linkcopy">Lien direct</a></h3>
         <div class="body">
           <p>Les données à caractère personnel sont traitées conformément à la politique de confidentialité disponible sur le site.</p>
           <p>Conformément à la réglementation applicable, l’Utilisateur dispose de droits d’accès, de rectification, d’effacement, d’opposition et de portabilité.</p>
         </div>
       </section>
 
-      <section id="article-9" class="article card">
-        <h3><span><span class="num">09</span>Article 9 — Mesures exceptionnelles</span><a href="#article-9" class="muted">Lien direct</a></h3>
+      <section id="article-9" class="article card" aria-expanded="true">
+        <h3><span><span class="num">09</span>Article 9 — Mesures exceptionnelles</span><a href="#article-9" class="muted linkcopy">Lien direct</a></h3>
         <div class="body">
           <p>Si necessaire, l'équipe en charge de l'application se reserve le droit d'agir de maniere à user de privileges exceptionnelles sur l'ensemble des services proposées.</p>
           <p>La responsabilité de l’équipe en charge de l'app ne saurait être engagée en cas de dommages indirects, pertes de données ou pertes de profit.</p>
@@ -298,69 +296,223 @@ Conformément au RGPD, chaque utilisateur dispose d’un droit d’accès, de re
       </section>
 
       <footer>
-        <center><span>© <span id="year"></span> — Kyoto ｼ🌸. Tous droits réservés.</span></center>
+        <span>© <span id="year"></span> — Kyoto ｼ🌸. Tous droits réservés.</span>
         <div>
-          <button class="btn-ghost btn to-top" id="toTop" type="button">Haut de page</button>
+          <button class="btn btn-ghost to-top" id="toTop" type="button">Haut de page</button>
         </div>
       </footer>
     </div>
   </main>
 
+  <!-- Mobile sommaire sheet -->
+  <div class="sheet" id="tocSheet" aria-hidden="true">
+    <div class="backdrop" id="sheetBackdrop"></div>
+    <div class="panel">
+      <div class="toc">
+        <h2 style="padding:1rem">Sommaire</h2>
+        <nav style="padding-bottom:1rem">
+          <a href="#article-1">01 — Objet</a>
+          <a href="#article-2">02 — Introduction aux services</a>
+          <a href="#article-3">03 — Mentions légales</a>
+          <a href="#article-4">04 — Accès au Service</a>
+          <a href="#article-5">05 — Gestion de l'application</a>
+          <a href="#article-6">06 — Règles d’utilisation</a>
+          <a href="#article-7">07 — Politique de confidentialité</a>
+          <a href="#article-8">08 — Données personnelles</a>
+          <a href="#article-9">09 — Mesures exceptionnelles</a>
+        </nav>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // ===== Préférences de thème (persistantes) =====
-    (function() {
-      const html = document.documentElement;
-      const saved = localStorage.getItem('theme');
-      if (saved === 'dark' || saved === 'light') {
-        html.setAttribute('data-theme', saved);
-      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        html.setAttribute('data-theme', 'dark');
-      }
-      const btn = document.getElementById('themeToggle');
-      function updateLabel() {
-        btn.textContent = html.getAttribute('data-theme') === 'dark' ? 'Mode clair' : 'Mode sombre';
-      }
-      btn.addEventListener('click', () => {
-        const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-        html.setAttribute('data-theme', next);
-        localStorage.setItem('theme', next);
-        updateLabel();
+  // ===== Utils =====
+  const $ = (sel, root=document) => root.querySelector(sel);
+  const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+  const debounce = (fn, d=120) => { let t; return (...a)=>{clearTimeout(t); t=setTimeout(()=>fn(...a), d)} };
+  const norm = s => (s||"").toString().normalize('NFD').replace(/\p{Diacritic}/gu,'').toLowerCase();
+
+  // ===== Theme (persistant) =====
+  (function(){
+    const html = document.documentElement;
+    const saved = localStorage.getItem('theme');
+    if(saved==='dark'||saved==='light'){ html.setAttribute('data-theme', saved) }
+    else if (matchMedia('(prefers-color-scheme: dark)').matches){ html.setAttribute('data-theme','dark') }
+    const btn = $('#themeToggle');
+    const setLabel = ()=> btn.title = html.getAttribute('data-theme')==='dark' ? 'Passer en mode clair' : 'Passer en mode sombre';
+    setLabel();
+    btn.addEventListener('click', (e)=>{
+      ripple(e);
+      const next = html.getAttribute('data-theme')==='dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      setLabel();
+    });
+  })();
+
+  // ===== Header buttons: ripple micro-interaction =====
+  function ripple(e){
+    const b = e.currentTarget; const r = b.getBoundingClientRect();
+    b.style.setProperty('--r-x', (e.clientX - r.left)+'px');
+    b.style.setProperty('--r-y', (e.clientY - r.top)+'px');
+    b.classList.add('ripple');
+    setTimeout(()=>b.classList.remove('ripple'), 450);
+  }
+  $$('.btn').forEach(b=> b.addEventListener('click', ripple));
+
+  // ===== Date & footer year =====
+  (function(){
+    const d=new Date(); const opt={day:'2-digit',month:'long',year:'numeric'};
+    $('#lastUpdate').textContent = d.toLocaleDateString('fr-FR', opt);
+    $('#year').textContent = d.getFullYear();
+    $('#printBtn').addEventListener('click', ()=> window.print());
+  })();
+
+  // ===== Scroll progress =====
+  (function(){
+    const bar = $('#progress');
+    const onScroll = ()=>{
+      const h = document.documentElement;
+      const p = (h.scrollTop)/(h.scrollHeight - h.clientHeight);
+      bar.style.width = (p*100)+"%";
+    };
+    window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+  })();
+
+  // ===== Reveal on view (IntersectionObserver) =====
+  (function(){
+    const obs = new IntersectionObserver((entries)=>{
+      for(const e of entries){ if(e.isIntersecting){ e.target.classList.add('reveal'); obs.unobserve(e.target) } }
+    }, {threshold:.15});
+    $$('.card').forEach(c=> obs.observe(c));
+  })();
+
+  // ===== Scroll spy (TOC) =====
+  (function(){
+    const links = $$('#tocNav a');
+    const secs = links.map(a=> $(a.getAttribute('href'))).filter(Boolean);
+    const handler = ()=>{
+      let current = secs[0];
+      for(const s of secs){ if(s.getBoundingClientRect().top - 110 <= 0) current = s; else break }
+      links.forEach(a=> a.classList.toggle('active', a.getAttribute('href') === '#' + current.id));
+    };
+    window.addEventListener('scroll', handler, {passive:true}); handler();
+  })();
+
+  // ===== Back to top =====
+  (function(){
+    const btn = $('#toTop');
+    const toggle = ()=> btn.classList.toggle('show', window.scrollY > 240);
+    window.addEventListener('scroll', toggle, {passive:true}); toggle();
+    btn.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+  })();
+
+  // ===== Mobile sheet (Sommaire) =====
+  (function(){
+    const openBtn = $('#tocOpen');
+    const sheet = $('#tocSheet');
+    const backdrop = $('#sheetBackdrop');
+    function open(){ sheet.classList.add('open'); sheet.setAttribute('aria-hidden','false'); }
+    function close(){ sheet.classList.remove('open'); sheet.setAttribute('aria-hidden','true'); }
+    openBtn.addEventListener('click', open);
+    backdrop.addEventListener('click', close);
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') close() });
+    $$('#tocSheet a').forEach(a=> a.addEventListener('click', close));
+  })();
+
+  // ===== Accordion (mobile only) =====
+  (function(){
+    const mq = matchMedia('(max-width:980px)');
+    const arts = $$('.article');
+    function setInitial(){ arts.forEach(a=> a.setAttribute('aria-expanded','false')) }
+    function expandAll(){ arts.forEach(a=> a.setAttribute('aria-expanded','true')) }
+    function sync(){ mq.matches ? setInitial() : expandAll() }
+    sync(); mq.addEventListener('change', sync);
+    arts.forEach(a=>{
+      const h = $('h3', a);
+      h.addEventListener('click', ()=>{
+        if(!mq.matches) return; // only toggle on mobile
+        const v = a.getAttribute('aria-expanded') === 'true';
+        a.setAttribute('aria-expanded', String(!v));
       });
-      updateLabel();
-    })();
+    });
+  })();
 
-    // ===== Date et année =====
-    (function() {
-      const d = new Date();
-      const options = { day: '2-digit', month: 'long', year: 'numeric' };
-      document.getElementById('lastUpdate').textContent = d.toLocaleDateString('fr-FR', options);
-      document.getElementById('year').textContent = d.getFullYear();
-    })();
+  // ===== Copy deep-link + toast =====
+  (function(){
+    const links = $$('.linkcopy');
+    let toast;
+    function showToast(msg){
+      if(!toast){ toast = document.createElement('div'); document.body.appendChild(toast); }
+      toast.textContent = msg;
+      Object.assign(toast.style, {position:'fixed',left:'50%',bottom:'18px',transform:'translateX(-50%)',padding:'8px 12px',background:'var(--surface)',border:'1px solid var(--outline)',borderRadius:'12px',boxShadow:'var(--shadow)',zIndex:80});
+      toast.animate([{opacity:0,transform:'translate(-50%, 8px)'},{opacity:1,transform:'translate(-50%, 0)'}],{duration:180,fill:'forwards'});
+      clearTimeout(showToast.tid); showToast.tid = setTimeout(()=> toast.animate([{opacity:1},{opacity:0}], {duration:180,fill:'forwards'}), 1600);
+    }
+    links.forEach(a=> a.addEventListener('click', (e)=>{
+      e.preventDefault();
+      const id = a.getAttribute('href');
+      const url = location.origin + location.pathname + id;
+      navigator.clipboard?.writeText(url);
+      showToast('Lien copié ✨');
+      history.replaceState(null, '', id); // met à jour le hash
+    }));
+  })();
 
-    // ===== Sommaire actif (scroll spy basique) =====
-    (function() {
-      const links = Array.from(document.querySelectorAll('.toc a'));
-      const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
-      function onScroll() {
-        let current = sections[0];
-        for (const section of sections) {
-          const rect = section.getBoundingClientRect();
-          if (rect.top - 100 <= 0) current = section; else break;
-        }
-        links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current.id));
+  // ===== Search (filter + highlight) =====
+  (function(){
+    const toggle = $('#searchToggle');
+    const bar = $('#searchbar');
+    const input = $('#searchInput');
+    function open(){ bar.classList.add('open'); input.focus(); }
+    function close(){ bar.classList.remove('open'); input.value=''; filter(''); }
+    toggle.addEventListener('click', ()=> bar.classList.toggle('open'));
+    document.addEventListener('keydown', (e)=>{ if(e.key === '/' && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)){ e.preventDefault(); open(); }});
+
+    const articles = $$('.article');
+    const texts = articles.map(a=> norm(a.textContent));
+    function clearMarks(a){ $$("mark", a).forEach(m=>{ const t=document.createTextNode(m.textContent); m.replaceWith(t); }); }
+
+    function highlight(a, q){
+      clearMarks(a);
+      if(!q) return;
+      const walker = document.createTreeWalker(a, NodeFilter.SHOW_TEXT, { acceptNode: (n)=> n.nodeValue.trim().length>0 ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT });
+      const toWrap = [];
+      const reg = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), 'gi');
+      while(walker.nextNode()){
+        if(reg.test(walker.currentNode.nodeValue)){ toWrap.push(walker.currentNode); }
       }
-      onScroll();
-      window.addEventListener('scroll', onScroll, { passive: true });
-    })();
+      toWrap.forEach(node=>{
+        const frag = document.createDocumentFragment();
+        const parts = node.nodeValue.split(reg);
+        let m; let i=0;
+        reg.lastIndex=0;
+        parts.forEach((part,idx)=>{
+          frag.appendChild(document.createTextNode(part));
+          if(idx < parts.length-1){
+            m = document.createElement('mark');
+            m.textContent = node.nodeValue.match(reg)[i++] || '';
+            frag.appendChild(m);
+          }
+        });
+        node.replaceWith(frag);
+      });
+    }
 
-    // ===== Bouton retour haut =====
-    (function(){
-      const toTop = document.getElementById('toTop');
-      function toggle(){ toTop.classList.toggle('show', window.scrollY > 240); }
-      toggle();
-      window.addEventListener('scroll', toggle, { passive: true });
-      toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-    })();
+    function filter(qRaw){
+      const q = norm(qRaw);
+      if(!q){ articles.forEach(a=> a.style.display = ''); return; }
+      articles.forEach((a, i)=>{
+        const hit = texts[i].includes(q);
+        a.style.display = hit ? '' : 'none';
+        if(hit) highlight(a, qRaw);
+      });
+    }
+
+    input.addEventListener('input', debounce(()=> filter(input.value), 120));
+    // close search on Escape when input focused
+    input.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ close(); } });
+  })();
   </script>
 </body>
 </html>
